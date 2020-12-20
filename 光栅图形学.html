@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>光栅图形学.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<pre><code>光栅显示器：可以看作一个像素矩阵，在光栅显示器上显示的任何一个图形，实际上都是一些具有一种或多种颜色的像素集合。
+
+光栅图形：对一个具体的光山县十七来说，像素个数是有限的，像素的颜色和灰度等级也是有限的，像素是有大小的，所以光栅图形只是近似的实际图形。
+    ——光栅显示器上显示的图形，称为光栅图形
+    ——图形光栅化之后，显示在屏幕上的一个窗口里，超出窗口的部分不予显示。确定一个图形的哪些部分在窗口内，必须显式;哪些部分在窗口外不予显示，即为“裁剪”
+    ——在光栅图形中，非水平和垂直的直线用像素集合表示时，会呈锯齿状，这种现象称为走样，用于减少或消除走样的技术称为反走样
+</code></pre>
+<h1 id="%E7%9B%B4%E7%BA%BF%E6%AE%B5%E7%9A%84%E6%89%AB%E6%8F%8F%E8%BD%AC%E6%8D%A2%E7%AE%97%E6%B3%95">直线段的扫描转换算法</h1>
+<pre><code>通过求出直线的斜率，让x保持步进，每次步进一个像素单位，y每次步进一个斜率（并通过强制转换为int保留有效信息）
+</code></pre>
+<h2 id="1dda%E7%94%BB%E7%BA%BF%E7%AE%97%E6%B3%95">1、DDA画线算法</h2>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DDALine</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x0,<span class="hljs-keyword">int</span> x1,<span class="hljs-keyword">int</span> y0,<span class="hljs-keyword">int</span> y1,<span class="hljs-keyword">int</span> color)</span>
+</span>{
+    <span class="hljs-keyword">int</span> x;
+    <span class="hljs-keyword">float</span> dx,dy,y,k;
+    dx = x1 - x0;
+    dy = y1 - y0;
+    k = dy/dx;
+    <span class="hljs-keyword">for</span>(x=x0;x&lt;=x1;x++)
+    {
+        drawPixel(x,(<span class="hljs-keyword">int</span>)(y+<span class="hljs-number">0.5</span>),color);
+        y += k;
+    }
+}
+</div></code></pre>
+<p>上述算法仅适用于|k|&lt;=1时的情况，若|k|&gt;1，可以将y与x互换。y与k必须用浮点数表示，而且每一步都需要对y进行取整，这使得它不利于硬件实现。</p>
+<h2 id="2%E4%B8%AD%E7%82%B9%E7%94%BB%E7%BA%BF%E6%B3%95">2、中点画线法</h2>
+<pre><code>假设直线方程为F(x,y) = ax+by+c = 0;
+则可得出步进的下一个点的位置，若d = F(x1,y1) &gt;= 0，则y++，否则y不变（前提是只考虑k大于0的情况）
+由于只需要知道d的符号就可以判断下一个像素点，为了避免小数，可以采用2*d进行运算。
+</code></pre>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MidpointLine</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x0,<span class="hljs-keyword">int</span> y0,<span class="hljs-keyword">int</span> x1,<span class="hljs-keyword">int</span> y1,<span class="hljs-keyword">int</span> color)</span>
+</span>{
+    <span class="hljs-keyword">int</span> a,b,d1,d2,d,x,y;
+    a = y0-y1;b = x1-x0;d = <span class="hljs-number">2</span>*a+b;
+    d1 = <span class="hljs-number">2</span>*a;d2 = <span class="hljs-number">2</span>*a+b;
+    x = x0;y = y0;
+
+    <span class="hljs-keyword">while</span>(x&lt;x1)
+    {
+        <span class="hljs-keyword">if</span>(d&lt;<span class="hljs-number">0</span>&gt;)
+        {
+            x++;y++;d+=d2;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            x++;d+=d1;
+        }
+        drawPixel(x,y,color);
+    }
+}
+</div></code></pre>
+<p>上述算法同样无法计算k&gt;1，甚至无法计算k&lt;0（可以通过优化if else结构支持k&lt;0）</p>
+<h2 id="3bresenham%E7%AE%97%E6%B3%95">3、Bresenham算法</h2>
+<pre><code>设直线方程为y=kx+b，则可知下一步的y1=k(x1-x)+b=y+k，即下一个像素的列坐标x++,y=y或y++。y是否自增取决于误差项d的值。d+=k,若d&gt;=0.5，则y++，若d&lt;0.5，则y=y，且需要将d保持在0~1的范围之内，即当d&gt;=1时，d--。
+
+将d的初始值设置为-0.5，便于通过符号判断
+</code></pre>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Bresenhamline</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> x0,<span class="hljs-keyword">int</span> y0,<span class="hljs-keyword">int</span> x1, <span class="hljs-keyword">int</span> y1,<span class="hljs-keyword">int</span> color)</span>
+</span>{ 
+    <span class="hljs-keyword">int</span> x, y, dx, dy;
+    <span class="hljs-keyword">float</span> k, e;
+    dx = x1-x0;dy = y1- y0;k=dy/dx;
+    e=<span class="hljs-number">-0.5</span>;x=x0;y=y0;
+    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>;i&lt;=dx;i++)
+    { 
+        drawpixel (x, y, color);
+        x++;e=e+k;
+        <span class="hljs-keyword">if</span> (e&gt;=<span class="hljs-number">0</span>)
+        {
+            y++; 
+            e=e<span class="hljs-number">-1</span>;
+        }  
+    }
+}
+</div></code></pre>
+<p>此算法依然没有考虑k&gt;1和k&lt;0</p>
+<p>由于该算法使用了大量除法和浮点数，故可以将d替换为-dx，省去求k的步骤：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">InterBresenhamline</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> x0,<span class="hljs-keyword">int</span> y0,<span class="hljs-keyword">int</span> x1, <span class="hljs-keyword">int</span> y1,<span class="hljs-keyword">int</span> color)</span>
+</span>{ 
+    dx = x1-x0;dy = y1- y0;e=-dx;
+    x=x0;y=y0;
+    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>; i&lt;=dx; i++)
+    {
+        drawpixel (x, y, color);
+        x++; e=e+<span class="hljs-number">2</span>*dy;
+        <span class="hljs-keyword">if</span> (e&gt;=<span class="hljs-number">0</span>)
+        { y++; e=e<span class="hljs-number">-2</span>*dx;}
+    }
+}
+</div></code></pre>
+<h1 id="%E5%9C%86%E6%A4%AD%E5%9C%86%E7%9A%84%E6%89%AB%E6%8F%8F%E8%BD%AC%E6%8D%A2">圆、椭圆的扫描转换</h1>
+<h2 id="1%E5%85%AB%E7%82%B9%E7%94%BB%E5%9C%86%E6%B3%95">1、八点画圆法</h2>
+<pre><code>圆是一个八对称图形，故将圆心设置为原点时，可以同时构造八段圆弧。
+当x==y时，停止画弧。
+</code></pre>
+<p>中点画圆算法：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MidPointCircle</span><span class="hljs-params">(<span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> color)</span>
+</span>{ 
+    <span class="hljs-keyword">int</span> x,y;
+    <span class="hljs-keyword">float</span> d;
+    x=<span class="hljs-number">0</span>; y=r; d=<span class="hljs-number">1.25</span>-r;
+    circlepoints (x,y,color); <span class="hljs-comment">//显示圆弧上的八个对称点</span>
+    <span class="hljs-keyword">while</span>(x&lt;=y)
+    { 
+        <span class="hljs-keyword">if</span>(d&lt;<span class="hljs-number">0</span>) d+=<span class="hljs-number">2</span>*x+<span class="hljs-number">3</span>;
+        <span class="hljs-keyword">else</span> { d+=<span class="hljs-number">2</span>*(x-y)+<span class="hljs-number">5</span>; y--;}
+        x++;
+        circlepoints (x,y,color);
+    }
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">circlepoints</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x,<span class="hljs-keyword">int</span> y,<span class="hljs-keyword">int</span> color)</span>
+</span>{
+    drawPixel(x,y,color);drawPixel(x,-y,color);
+    drawPixel(-x,y,color);drawPixel(-x,-y,color);
+    drawPixel(y,x,color);drawPixel(y,-x,color);
+    drawPixel(-y,x,color);drawPixel(-y,-x,color);
+}
+</div></code></pre>
+<h2 id="2%E6%A4%AD%E5%9C%86%E7%9A%84%E6%89%AB%E6%8F%8F%E8%BD%AC%E6%8D%A2%E7%AE%97%E6%B3%95">2、椭圆的扫描转换算法</h2>
+<pre><code>椭圆斜率绝对值小于1时，在x方向取单位步长
+椭圆斜率绝对值大于1时，在y方向取单位步长
+</code></pre>
+<h3 id="%E4%B8%8A%E5%8D%8A%E9%83%A8%E5%88%86">上半部分：</h3>
+<p>下一对候选像素的中点是(x+1,y-0.5)<br>
+判别式 $d1=F(x+1,y-0.5)=b^2(x+1)^2+a2(y-0.5)^2-a^2b^2$</p>
+<h4 id="%E5%A2%9E%E9%87%8F">增量:</h4>
+<p>$d1&lt;0时  d1'=F(x+2,y-0.5)=d_1+b^2(2x+3)$<br>
+$d1&gt;0时d1'=F(x+2,y-1.5)=d_1+b^2(2x+3)+a^2(-2y+2)$</p>
+<h3 id="%E4%B8%8B%E5%8D%8A%E9%83%A8%E5%88%86">下半部分：</h3>
+<p>下一对候选像素的中点是(x+0.5,y-1)
+判别式 $d_2=F(x+0.5,y-1)= b^2(x+0.5)^2+a^2(y-1)^2-a^2b^2$</p>
+<p>增量的xy互换</p>
+<h1 id="%E5%8C%BA%E5%9F%9F%E5%A1%AB%E5%85%85%E7%AE%97%E6%B3%95">区域填充算法</h1>
+<pre><code>– 区域填充即给出一个区域的边界，要求对边界范围内的所有像素单元赋予指定的颜色代码。
+– 区域填充中最常用的是多边形填色。
+– 多边形填色即给出一个多边形的边界，要求对多边形边界范围的所有像素单元赋予指定的颜色代码。
+– 要完成这个任务，一个首要的问题，是判断一个像素是在多边形内还是外。
+</code></pre>
+<h3 id="%E5%A1%AB%E8%89%B2%E7%AE%97%E6%B3%95%E5%88%86%E4%B8%BA%E4%B8%A4%E5%A4%A7%E7%B1%BB">填色算法分为两大类：</h3>
+<pre><code>1.扫描线(Scanline)填色算法。  
+- 这类算法建立在多边形边界的矢量形式数据之上，可用于程序填色，也可用于交互填色。  
+
+2.种子(Seed)填色算法。  
+- 这类算法建立在多边形边界的图像形式数据之上，并还需提供多边形界内一点的坐标。所以，它一般只能用于人机交互填色，而难以用于程序填色。
+</code></pre>
+<h2 id="1%E6%B4%BB%E6%80%A7%E8%BE%B9%E8%A1%A8%E6%B3%95">1、活性边表法</h2>
+<p>活性边：和当前扫描线有交点的边
+活性边表节点的数据结构：</p>
+<table>
+<thead>
+<tr>
+<th>x</th>
+<th>Δx</th>
+<th>$y_{max}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>当前扫描线与边的交点的x值</td>
+<td>从当前扫描线到下一扫描线x的增量</td>
+<td>活性边所交的最大值</td>
+</tr>
+</tbody>
+</table>
+<p>该数据结构代表扫描线与y轴平行时，每条扫描线扫描的过程中x遍历到活性边表中的每个x区间，并由Δx推断出下一条扫描线所对应的活性边表</p>
+<img src="活性边表.png">
+<p>新边表：若不规则图形在一个扫描线上出现了一条新的边，而活性边表中没有对应数据，则无法从上一条活性边中完整推出下一条完整活性边。则需要一个额外的数据结构维护每一个扫描线上出现的新的边，此数据结构即为新边表。新边表中存储的数据结构与活性边表相同。不同的是，这是一个链表集合，为每条扫描线维护了一个链表。</p>
+<img src="新边表.png">
+<p>伪代码：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> color;多边形 polygon;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">polyfill</span><span class="hljs-params">(polygon,color)</span>
+</span>{
+    <span class="hljs-keyword">for</span>(扫描线i)
+    {
+        初始化新边表头指针NET[i];
+        将ymin=i的边放入NET[i];<span class="hljs-comment">//即将边最底下的点放入新边表</span>
+    }
+
+    y=最低扫描线号;
+    初始化活性边表AET为空;
+    <span class="hljs-keyword">for</span>(扫描线i)
+    {
+        把NET[i]中的边节点用插入排序法插入AET表，使之按x递增的顺序排列;
+        若允许多边形的边自相交，则用冒泡排序法对AET进行重新排列;<span class="hljs-comment">//自相交：即图形内部的边存在相较</span>
+        遍历AET，把配对交点区间(左闭右开)上的像素(x,y)用drawPixel(<span class="hljs-keyword">int</span> x,<span class="hljs-keyword">int</span> y,<span class="hljs-keyword">int</span> color)改写像素颜色值;
+        遍历AET，把ymax=i的节点删除，并把ymax&gt;i的节点的x值递增Δx;
+    }
+}
+</div></code></pre>
+<h2 id="2%E7%A7%8D%E5%AD%90%E5%A1%AB%E5%85%85%E7%AE%97%E6%B3%95">2、种子填充算法</h2>
+<p>采用递归实现，需要有一个已知的在填充区域内的点作为“种子”，种子填充算法分为四联通和八联通，分别对应种子的各个方向。</p>
+<p>4联通的种子递归填充算法为：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">BoundryFill4</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x,<span class="hljs-keyword">int</span> y,<span class="hljs-keyword">int</span> boundary_color,<span class="hljs-keyword">int</span> new_color)</span>
+</span>{
+    <span class="hljs-keyword">int</span> color = getPixelColor(x,y);
+    <span class="hljs-keyword">if</span>(color != new_color&amp;&amp;color != boundary_color)
+    {
+        drawPixel(x,y,new_color);
+        <span class="hljs-comment">//下面对四个方向做递归扫描</span>
+        BoundryFill4(x,y+<span class="hljs-number">1</span>,boundary_color,new_color);
+        BoundryFill4(x,y<span class="hljs-number">-1</span>,boundary_color,new_color);
+        BoundryFill4(x+<span class="hljs-number">1</span>,y,boundary_color,new_color);
+        BoundryFill4(x<span class="hljs-number">-1</span>,y,boundary_color,new_color);
+    }
+}
+</div></code></pre>
+<h1 id="%E8%A3%81%E5%89%AA">裁剪</h1>
+<pre><code>裁剪是裁去窗口之外物体的一种操作
+</code></pre>
+<h2 id="1%E7%9B%B4%E7%BA%BF%E6%AE%B5%E8%A3%81%E5%89%AA">1、直线段裁剪</h2>
+<pre><code>直线段裁剪算法是复杂图元裁剪的基础。
+复杂的曲线可以通过折线段来近似，从而裁剪问题也可以转化为直线段的裁剪问题。
+</code></pre>
+<p>每段直线的端点都被赋予一组四位二进制代码，称为区域编码(region code，RC)，用来标识直线段端点相对于窗口边界及其延长线的位置。</p>
+<p>假设窗口是标准矩形，由上、下、左、右4条边界组成，延长窗口的4条边界形成9个区域。这样根据直线段的任一端点P(x，y)所处的窗口区域位置，可以赋予一组4位二进制编码，称为区域码RC=C3C2C1C0。C0代表左边界， C1代表右边界， C2代表下边界， C3代表上边界。</p>
+<p>为了保证窗口内及窗口边界上直线段端点的编码为零，定义规则如下：<br>
+C0：若端点的 x &lt; wxl，则C0=1，否则C0=0。<br>
+C1：若端点的x &gt; wxr，则C1=1，否则C1=0。<br>
+C2：若端点的y &lt; wyb，则C2=1，否则C2=0。<br>
+C3：若端点的y &gt; wyt，则C3=1，否则C3=0。</p>
+<p>1.若直线段的两个端点的区域编码都为0，有RC0|RC1=0（二者按位相或的结果为零，即RC0=0且RC1=0），说明直线段的两个端点都在窗口内，应“简取”之（trivally accepted）。</p>
+<p>2.若直线段的两个端点的区域编码都不为0，且RC0&amp;RC1≠0（二者按位相与的结果不为零，即RC0≠0且RC1≠0），说明直线段位于窗外的同一侧，或左方、或右方、或上方、或下方，应“简弃”之（trivally rejected）。</p>
+<p>3.若直线段既不满足“简取”也不满足“简弃”的条件，则需要与窗口进行“求交”判断。这时，直线段必然与窗口边界或窗口边界的延长线相交，在交点处把线段分为两段，其中一段完全在窗口外，可
+弃之，另一段重复上述处理。</p>
+<p>求交点代码：</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> LEFT 1    <span class="hljs-comment">//0001</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RIGHT 2   <span class="hljs-comment">//0010</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BOTTOM 4  <span class="hljs-comment">//0100</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> TOP 8     <span class="hljs-comment">//1000</span></span>
+……
+<span class="hljs-keyword">if</span>(LEFT&amp;code !=<span class="hljs-number">0</span>)<span class="hljs-comment">//判断是否与左侧相交</span>
+{x=XL;y=y1+(y2-y1)*(XL-x1)/(x2-x1);}
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(RIGHT&amp;code !=<span class="hljs-number">0</span>)<span class="hljs-comment">//判断是否与右侧相交</span>
+{x=XR;y=y1+(y2-y1)*(XR-x1)/(x2-x1);}
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(BOTTOM&amp;code !=<span class="hljs-number">0</span>)<span class="hljs-comment">//判断是否与下部相交</span>
+{y=YB;x=x1+(x2-x1)*(YB-y1)/(y2-y1);}
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(TOP &amp; code !=<span class="hljs-number">0</span>)<span class="hljs-comment">//判断是否与上部相交</span>
+{y=YT;x=x1+(x2-x1)*(YT-y1)/(y2-y1);}
+……
+</div></code></pre>
+<img src="交点计算.png">
+<h2 id="2%E4%B8%AD%E7%82%B9%E5%88%86%E5%89%B2%E6%B3%95">2、中点分割法</h2>
+<p>从P0出发找最近可见点的方法：</p>
+<pre><code>p0 ——————pm—————— p1
+1. 先求出P0P1的中点Pm  
+2. 若P0Pm不是显然不可见的，并且P0P1在窗口中有可见部分，则距P0最近的可见点一定落在P0Pm上，所以用P0Pm代替P0P1;
+3. 否则取PmP1代替P0P1;
+4. 再对新的P0P1求中点Pm。重复上述过程，直到PmP1长度小于给定的控制常数为止，此时Pm收敛
+于交点。
+</code></pre>
+<p>从P1出发找最近可见点采用上面类似方法。</p>
+<h2 id="3cyrus-beck%E7%AE%97%E6%B3%95">3、Cyrus-Beck算法</h2>
+<img src="cyrus-beck.png">
+<p>与多边形的每条边均须计算一次
+计算量大，只适用凸多边形</p>
+<img src="cyrus-beck算法的算法.png">
+<h2 id="4%E6%A2%81%E5%8F%8B%E6%A0%8B%E7%AE%97%E6%B3%95">4、梁友栋算法</h2>
+<p>即简化版Cyrus-Beck算法，裁剪多边形为四边形</p>
+<p>实现代码:</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">LB_LineClip</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x1,<span class="hljs-keyword">float</span> y1,<span class="hljs-keyword">float</span> x2,<span class="hljs-keyword">float</span> y2,<span class="hljs-keyword">float</span> XL,<span class="hljs-keyword">float</span> XR,<span class="hljs-keyword">float</span> YB,<span class="hljs-keyword">float</span> YT)</span>
+</span>{
+    <span class="hljs-keyword">float</span> dx,dy,u1,u2;
+    tl=<span class="hljs-number">0</span>;tu=<span class="hljs-number">1</span>;dx =x2-x1;dy =y2-y1;
+    <span class="hljs-keyword">if</span>(ClipT(-dx,x1-Xl,&amp;u1,&amp;u2)
+        <span class="hljs-keyword">if</span>(ClipT(dx,XR-x1, &amp;u1,&amp;u2)
+            <span class="hljs-keyword">if</span>(ClipT(-dy,y1-YB, &amp;u1,&amp;u2)
+                <span class="hljs-keyword">if</span>(ClipT(dy,YT-y1, &amp;u1,&amp;u2)
+                {
+                    displayline(x1+u1*dx,y1+u1*dy, x1+u2*dx,y1+u2*dy)
+                    <span class="hljs-keyword">return</span>;
+                }
+}
+
+<span class="hljs-keyword">bool</span> ClipT(<span class="hljs-keyword">float</span> p,<span class="hljs-keyword">float</span> q,<span class="hljs-keyword">float</span> *u1,<span class="hljs-keyword">float</span> *u2)
+{
+    <span class="hljs-keyword">float</span> r;
+    <span class="hljs-keyword">if</span>(p&lt;<span class="hljs-number">0</span>)
+    {
+        r=q/p;
+        <span class="hljs-keyword">if</span>(r&gt;*u2)
+            <span class="hljs-keyword">return</span> FALSE;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(r&gt;*u1)
+        {
+            *u1=r;
+            <span class="hljs-keyword">return</span> TRUE;
+        }   
+    }
+
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(p&gt;<span class="hljs-number">0</span>)
+    {
+        r=p/q;
+        <span class="hljs-keyword">if</span>(r&lt;*u1)
+            <span class="hljs-keyword">return</span> FALSE;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(r&lt;*u2)
+        {
+            *u2=r;
+            <span class="hljs-keyword">return</span> TRUE;
+        }
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(q&lt;<span class="hljs-number">0</span>) 
+        <span class="hljs-keyword">return</span> FALSE;
+    <span class="hljs-keyword">return</span> TRUE;
+}
+</div></code></pre>
+<h2 id="5%E5%A4%9A%E8%BE%B9%E5%BD%A2%E8%A3%81%E5%89%AA">5、多边形裁剪</h2>
+<p>对于多边形的每条边进行边裁剪，输出的点组成一个全新的多边形，这个多边形便是被裁减后的多边形。点的选取方式如下</p>
+<img src="多边形裁剪.png">
+<p>算法步骤如下：
+1、已知：多边形顶点数组src，顶点个数n，
+　 　　　　　定义新多边形顶点数组dest。</p>
+<p>2、赋初值：用变量flag来标识：0表示在内侧，1表示在外侧。</p>
+<p>3、对多边形的n条边进行处理，对当前点号的考虑为：0～n-1。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;n;i++)
+{
+   <span class="hljs-keyword">if</span>(当前第i个顶点是否在边界内侧？)
+   {
+       <span class="hljs-keyword">if</span>(flag!=<span class="hljs-number">0</span>) <span class="hljs-comment">/*前一个点在外侧吗？*/</span>
+       {
+           flag=<span class="hljs-number">0</span>;<span class="hljs-comment">/*从外到内的情况，将标志置0,作为下一次循环的前一点标志*/</span>
+           (dest + j) =求出交点;　<span class="hljs-comment">/*将交点dest放入新多边形*/</span>
+           j++;
+       }
+       (dest + j)= (src + i); <span class="hljs-comment">/*将当前点srci放入新多边形*/</span>
+       j++;
+   }
+   <span class="hljs-keyword">else</span>
+   {
+       <span class="hljs-keyword">if</span>(flag==<span class="hljs-number">0</span>) <span class="hljs-comment">/*前一个点在内侧吗？*/</span>
+       {
+           flag=<span class="hljs-number">1</span>;<span class="hljs-comment">/*从内到外的情况，将标志置1,作为下一次循环的前一点标志*/</span>
+           (dest + j) =求出交点;　<span class="hljs-comment">/*将交点dest放入新多边形*/</span>
+           j++;
+       }
+   }
+   s= (src + i); <span class="hljs-comment">/*将当前点作为下次循环的前一点*/</span>
+}
+
+</div></code></pre>
+<h2 id="6%E5%AD%97%E7%AC%A6%E8%A3%81%E5%89%AA">6、字符裁剪</h2>
+<p>字符裁剪有三种裁剪方式：</p>
+<ol>
+<li>串精度：将包围字符串的外接矩形对窗口作裁剪。</li>
+<li>字符进度：将包围字符的外接矩形对窗口作裁剪</li>
+<li>像素精度：将笔划分解成直线段对窗口作裁剪</li>
+</ol>
+<img src="字符裁剪.png">
+<h1 id="%E7%BA%BF%E5%AE%BD%E7%BA%BF%E5%9E%8B%E5%AD%97%E7%AC%A6%E5%8F%8D%E8%B5%B0%E6%A0%B7">线宽线型、字符、反走样</h1>
+<h2 id="1%E7%BA%BF%E5%AE%BD%E5%A4%84%E7%90%86">1、线宽处理</h2>
+<h3 id="1%E7%9B%B4%E7%BA%BF%E7%BA%BF%E5%AE%BD%E7%9A%84%E5%A4%84%E7%90%86">1、直线线宽的处理</h3>
+<ul>
+<li>
+<p>线刷：</p>
+<ul>
+<li>算法简单</li>
+<li>线的始末端是水平或垂直的</li>
+<li>斜率不同，线的宽度不同</li>
+<li>对于宽度为偶数个像素的直线会产生偏移</li>
+</ul>
+</li>
+<li>
+<p>方形刷：</p>
+<ul>
+<li>方形中心对准单像素宽的线条上各个像素</li>
+<li>存在重复写像素的问题</li>
+<li>线条末端是水平或垂直的，且线宽与线条方向有关</li>
+<li>对于宽度为偶数个像素的直线会产生偏移</li>
+</ul>
+</li>
+</ul>
+<p>区域填充法：······</p>
+<h3 id="2%E5%9C%86%E5%BC%A7%E7%BA%BF%E5%AE%BD%E7%9A%84%E5%A4%84%E7%90%86">2、圆弧线宽的处理</h3>
+<ul>
+<li>线刷：
+<ul>
+<li>在小于45°时使用水平刷子，在大于45°时用垂直刷子，即在经过曲线斜率为±1的点时刷子的方向要改变</li>
+</ul>
+</li>
+<li>方形刷：
+<ul>
+<li>不需要改变刷子的方向，只需要沿着单像素宽的轨迹，把正方形中心对准轨迹上的像素，把方形内的像素全部置成线条颜色</li>
+</ul>
+</li>
+<li>区域填充法：······</li>
+</ul>
+<h2 id="2%E7%BA%BF%E5%9E%8B%E5%A4%84%E7%90%86">2、线型处理</h2>
+<ul>
+<li>实线、虚线、点划线</li>
+<li>线形的表示：布尔值序列</li>
+</ul>
+<h2 id="3%E5%AD%97%E7%AC%A6%E5%A4%84%E7%90%86">3、字符处理</h2>
+<p>计算机中字符由一个数字编码唯一标识。</p>
+<p>表示方法：</p>
+<ol>
+<li>点阵字符</li>
+</ol>
+<blockquote>
+<p>每个字符由一个位图表示</p>
+</blockquote>
+<ul>
+<li>每一个字符有一个位图表示</li>
+<li>存储空间大，但易于显示</li>
+<li>显示时，先将位图从字库中读取出来，然后将位图写入帧缓冲器中</li>
+</ul>
+<ol start="2">
+<li>矢量字符</li>
+</ol>
+<blockquote>
+<p>由直线段和曲线段组成，记录字符的笔画信息</p>
+</blockquote>
+<ul>
+<li>记录的是字符的笔画信息</li>
+<li>存储量小，美观，变换方便，但需要光栅化之后才能显示</li>
+</ul>
+<p>字符属性：</p>
+<ol>
+<li>字体</li>
+<li>字高</li>
+<li>字倾斜角</li>
+<li>字色</li>
+</ol>
+<h2 id="4%E8%B5%B0%E6%A0%B7%E4%B8%8E%E5%8F%8D%E8%B5%B0%E6%A0%B7">4、走样与反走样</h2>
+<p>走样：</p>
+<blockquote>
+<p>用离散量表示连续量引起的失真现象称之为走样</p>
+</blockquote>
+<p>反走样：</p>
+<blockquote>
+<p>用于消除走样的技术便是反走样</p>
+</blockquote>
+<p>反走样方法：</p>
+<ol>
+<li>
+<p>提高分辨率</p>
+<ul>
+<li>将显示器的分辨率提高，显示出的直线段看起来就平直光滑了</li>
+<li>同时阶梯的宽度减小了</li>
+<li>同样会导致存储器和扫描转换时间的消耗增加</li>
+<li>每增加一倍的分辨率，将会减小一倍的阶梯宽度，以及花费4倍的存储器空间和2倍的扫描转换时间</li>
+<li>并且不能完全消除锯齿</li>
+</ul>
+</li>
+<li>
+<p>区域采样</p>
+<ul>
+<li>将直线段看作具有一定宽度的狭长矩形</li>
+<li>当直线段与像素相交时，求出两者相交区域的面积，然后根据相交区域面积的大小确定该位置像素的亮度</li>
+<li>区域采样的离散方法：
+<ul>
+<li>首先将屏幕像素均分为n个子像素</li>
+<li>然后季孙中心点落在直线段内的子像素个数</li>
+<li>将该像素的屏幕亮度置为最大灰度值x相交区域面积的近似值</li>
+</ul>
+</li>
+<li>简单区域采样的缺点：
+<ul>
+<li>像素的亮度与相交区域的面积成正比，而与相交区域落在像素内的位置无关，这仍然会导致锯齿效应</li>
+<li>直线条上沿理想直线方向的相邻两个像素有时会有较大的灰度差</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>加权区域采样</p>
+<ul>
+<li>使相交区域对像素亮度的贡献依赖于该区域与像素中心的距离</li>
+<li>当直线经过该像素时，像素的亮度时在两者相交区域上对滤波器进行积分的结果</li>
+<li>加权区域采样的离散方法：
+<ul>
+<li>将屏幕像素划分为n个子像素</li>
+<li>求出所有中心位于直线段内的子像素</li>
+<li>计算这些子像素对原像素亮度贡献之和乘以像素的最大灰度值（与卷积运算类似），即通过加权表得出子像素的权重和，通过总权重求出亮度。</li>
+<li>加权表可取 $\frac{1}{16} \left[\begin{matrix} 1 &amp; 2 &amp; 3 \4 &amp; 5 &amp; 6 \7 &amp; 8 &amp; 9\end{matrix}\right]$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="%E5%9B%BE%E5%BD%A2%E5%8F%98%E6%8D%A2">图形变换</h1>
+<h2 id="1%E4%BA%8C%E7%BB%B4%E5%9B%BE%E5%BD%A2%E5%8F%98%E6%8D%A2">1、二维图形变换</h2>
+<img src="二维图形变换.png">
+<img src="二维图形平移变换.png">
+<img src="二维图形缩放变换.png">
+<img src="二维图形对称变换.png">
+<img src="二维图形旋转变换.png">
+<img src="二维图形错切变换.png">
+<h3 id="%E5%A4%8D%E5%90%88%E5%8F%98%E6%8D%A2">复合变换</h3>
+<p>$$
+T_t = T_{t1}T_{t2}
+$$
+即多个变换矩阵的乘积</p>
+<h2 id="2%E4%B8%89%E7%BB%B4%E5%9B%BE%E5%BD%A2%E5%8F%98%E6%8D%A2">2、三维图形变换</h2>
+<img src="三维图形变换.png">
+平移变换：
+<img src="三维图形平移变换.png">
+缩放变换：
+<img src="三维图形缩放变换.png">
+绕轴坐标旋转变换:
+<img src="三维图形绕坐标轴旋转变换.png">
+绕任意轴旋转变换：
+<img src="三维图形绕任意轴旋转变换.png">
+<h2 id="%E6%8A%95%E5%BD%B1%E5%8F%98%E6%8D%A2%E5%88%86%E7%B1%BB">投影变换分类</h2>
+<ol>
+<li>
+<p>平行投影</p>
+<ul>
+<li>
+<p>用定义投影线方向的投影向量给出一个平行投影。</p>
+<ul>
+<li>当投影(向量)垂直于观察平面时，得到正平行投影(正投影)</li>
+<li>否则为斜平行投影</li>
+</ul>
+</li>
+<li>
+<p>当投影平面与某一坐标轴垂直时，得到的投影称为三视图(包括前视图、侧视图和顶(俯)视图)</p>
+</li>
+<li>
+<p>当投影平面不与某一坐标轴垂直时，形成的投影称为正轴测图，用来显示物体多个侧面</p>
+</li>
+<li>
+<p>投影平面三个法向量模|nx|、|ny|和|nz|全相等时，正轴测图为等轴测</p>
+</li>
+<li>
+<p>其中两个相等时为正二测</p>
+</li>
+<li>
+<p>各不相同时为正三测</p>
+</li>
+</ul>
+</li>
+<li>
+<p>斜投影</p>
+<ul>
+<li>斜投影由两个角度确定</li>
+<li>点(x,y,z)投影到观察平面的(xp,yp)位置</li>
+<li>平面上正投影坐标是(x,y)</li>
+<li>从(x,y,z)到(xp,yp)的斜投影线与投影平面中的点(xp,yp)和(x,y)的连线交成角α</li>
+<li>点(xp,yp)和(x,y)的连线与观察平面x轴的夹角为β</li>
+</ul>
+</li>
+</ol>
+<p>如下图：<br>
+<img src="斜投影.png"></p>
+<p>斜投影的计算矩阵如下：<br>
+<img src="斜投影计算矩阵.png"></p>
+<ul>
+<li>L1=0 (投射角α为90°)时得正投影</li>
+<li>L1为非零值时产生斜投影</li>
+<li>α通常的值为tanα=1，且所得视图称为斜等测投影</li>
+<li>所有与投影平面垂直的直线在投影中长度不变</li>
+<li>投影角α满足tanα=2时，所生成视图称斜二测投影</li>
+<li>对于这样的角(≈63.4°)，与观察面垂直的线投影成一半长度</li>
+<li>β通常选择为30°或45°，这将显示出一物体的前面、侧面和顶面(或底面)的联合视图</li>
+</ul>
+<ol start="3">
+<li>
+<p>透视投影</p>
+<ul>
+<li>对于透视投影，物体的位置沿着收敛于某一点的直线变换到观察平面上，此点称为投影参考点(或投影中心)</li>
+<li>物体的投影视图由计算投影线与观察平面的交点而得</li>
+<li>透视投影生成真实感视图，但不保持比例关系</li>
+<li>对于同样大小的物体，离开投影平面较远的物体其投影图像比较近物体的图像较小</li>
+<li>灭点
+<ul>
+<li>当物体用透视变换方程投影到观察平面上时，物体中不与观察平面平行的任一族平行线经过透视投影后收敛于一点，此点称为灭点
+<ul>
+<li>三维环境中存在无数簇平行线，从而灭点也有无数个。</li>
+</ul>
+</li>
+<li>平行于某一坐标轴的平行线的灭点称为主灭点
+<ul>
+<li>用投影平面的方向控制主灭点数目，且据此将透视投影分类为一点、两点或三点透视</li>
+<li>投影中主灭点数目是由与观察盘面相交的主轴数目来决定的，主轴数目最多为三个</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<img src="透视投影变换.png">
+<img src="透视投影变换矩阵.png">
+<h1 id="%E5%8F%82%E6%95%B0%E6%9B%B2%E7%BA%BF%E5%92%8C%E6%9B%B2%E9%9D%A2%E5%9F%BA%E7%A1%80">参数曲线和曲面基础</h1>
+<h2 id="1%E6%9B%B2%E7%BA%BF%E6%9B%B2%E9%9D%A2%E5%8F%82%E6%95%B0%E8%A1%A8%E7%A4%BA">1、曲线曲面参数表示</h2>
+<p>$$
+平面曲线：P(t)=[x(t),y(t)]\
+空间曲线：P(t)=[x(t),y(t),z(t)]
+$$</p>
+<p>平面曲线的显式表示：$y=f(x)$<br>
+平面曲线的隐式表示：$f(x,y)=0$</p>
+<p>显式或隐式表示的问题：</p>
+<ul>
+<li>与坐标轴相关</li>
+<li>可能出现斜率为无穷大的情形(如垂线)</li>
+<li>不便于计算机编程</li>
+</ul>
+<p>参数表示的优点：</p>
+<ul>
+<li>便于处理斜率无穷大的情形，不会因此而中断计算</li>
+<li>规格化的参数变量$t \in [0,1]$ ，使其相应的几何分量是有界的，而不必考虑边界问题</li>
+<li>对曲线、曲面进行变换，可以对其参数方程直接进行几何变换</li>
+<li>便于把低维空间中的曲线、曲面拓展到高维空间</li>
+<li>易于用矢量和矩阵表示几何分量，简化计算</li>
+<li>有更大的自由度来控制曲线、曲面的形状</li>
+</ul>
+<p>位置矢量：$P(t)=[x(t),y(t),z(t)]$<br>
+切矢量：</p>
+<ul>
+<li>将弧长s作为参数，则$T={dP\over ds}=lim_{Δs→0}{ΔP\over ΔS}$  为单位切矢量</li>
+<li>$T={dP\over dS}={P'(t)\over |P'(t)|}$</li>
+</ul>
+<p>法矢量：</p>
+<ul>
+<li>与 ${dT\over dS}$ (就是$T'(s)$换了个写法) 平行的法矢量称为曲线在该点的主法矢量</li>
+<li>矢量积 $B=T\times N$ 是第三个单位矢量，它垂直于T和N。把平行于矢量B的法矢量称为曲线的副法矢量</li>
+<li>故可推出：<img src="主法矢量与副法矢量的计算.png"></li>
+<li>需注意上述关于N的等式其分母应为: $|(P'(t)\times P''(t))\cdot P'(t)|$</li>
+<li>T、N、B共同构成了曲线上的活动坐标架: <img src="曲线的法矢量.png"></li>
+</ul>
+<h2 id="2%E6%9B%B2%E7%8E%87%E5%92%8C%E6%8C%A0%E7%8E%87">2、曲率和挠率</h2>
+<ol>
+<li>曲率
+<ol>
+<li>其几何意义是曲线的单位切矢量对弧长的转动率$|{dT\over dS}|$</li>
+<li>曲率k的倒数$\rho={1\over k}$</li>
+<li>$k=lim_{ΔS→0}|{Δ\theta\over ΔS}|$</li>
+<li>有$T'=kN$</li>
+<li>计算公式如下：<img src="曲率计算.png"></li>
+</ol>
+</li>
+<li>挠率
+<ol>
+<li>挠率的绝对值等于夫法线方向对于弧长的转动率${dB\over dS}$</li>
+<li>$|\tau|=lim_{ΔS→0}|{Δ\phi\over ΔS}|$</li>
+<li>计算公式如下：<img src="挠率计算.png"></li>
+<li>计算公式的分子应为$(P'(t)\times P''(t))\cdot P'''(t)$</li>
+<li>分子是一个向量，但分母为向量的平方-&gt;向量的平方即该向量的模的平方，为一个值</li>
+</ol>
+</li>
+</ol>
+<h2 id="3%E6%8F%92%E5%80%BC%E6%8B%9F%E5%90%88%E9%80%BC%E8%BF%91%E5%85%89%E9%A1%BA">3、插值、拟合、逼近、光顺</h2>
+<ul>
+<li>插值
+<ul>
+<li>给定一组有序的数据点$P_i,i=0,1,2,3,...,n$，构造一条曲线顺序通过所有数据点，称为对这些数据点进行插值，所构造的曲线称为插值曲线</li>
+<li>线性插值
+<ul>
+<li>假设给定函数$f(x)$在两个不同的点$x_1$和$x_2$的值，用一个线性函数 $y=ax+b$ 近似代替，称为线性插值函数</li>
+</ul>
+</li>
+<li>抛物线插值
+<ul>
+<li>已知在三个互异点$x_1,x_2,x_3$的函数值为$y_1,y_2,y_3$，要求构造一个函数 $\phi(x)=ax^2+bx+c$使得抛物线在节点$x_1,x_2,x_3$处与$f(x)$在节点$x_1,x_2,x_3$处的值相等，称为抛物线插值函数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>拟合
+<ul>
+<li>构造一条曲线使之在某种意义下最接近给定的数据点(但未必通过)，所构造的曲线为拟合曲线</li>
+</ul>
+</li>
+<li>逼近
+<ul>
+<li>在计算数学中，逼近通常指用一些性质较好的函数近似表示一些性质不好的函数。在计算机图形学中，逼近继承了这方面的含义，因此插值和拟合都可以视为逼近</li>
+</ul>
+</li>
+<li>光顺
+<ul>
+<li>光顺指曲线的拐点不能太多</li>
+<li>对于平面曲线而言，相对光顺的条件是：
+<ul>
+<li>具有二阶几何连续性($G^2$)</li>
+<li>不存在多余拐点和奇异点</li>
+<li>曲率变换比较小</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4%E5%8F%82%E6%95%B0%E6%9B%B2%E7%BA%BF%E7%9A%84%E4%BB%A3%E6%95%B0%E5%92%8C%E5%87%A0%E4%BD%95%E5%BD%A2%E5%BC%8F">4、参数曲线的代数和几何形式</h2>
+<ul>
+<li>代数形式：
+<ul>
+<li>
+<img src="参数曲线的代数形式.png">
+</li>
+</ul>
+</li>
+<li>矢量形式：
+<ul>
+<li>$P(t)=a_3t^3+a_2t^2+a_1t+a_0 \  t\in[0,1]$</li>
+</ul>
+</li>
+<li>几何形式：
+<ul>
+<li>
+<img src="参数曲线的几何形式.png">
+</li>
+<li>令$F_0(t)=2t^3-3t^2+1\F_1(t)=-2t^3+3t^2\G_0(t)=t^3-2t^2+t\G_1(t)=t^3-t^2$</li>
+<li>则可得出三次Hermite曲线的几何形式：$P(t)=F_0P_0+F_1P_1+G_0P'_0+G_1P'_1 \ where \ t\in [0,1]$</li>
+<li>$P_0,P_1,P'_0,p'_1$是几何系数</li>
+<li>$F_0,F_1,G_0,G_1$是调和函数</li>
+</ul>
+</li>
+</ul>
+<h2 id="5%E8%BF%9E%E7%BB%AD%E6%80%A7">5、连续性</h2>
+<p>曲线之间连接的光滑度，有两种度量方式：</p>
+<ol>
+<li>参数连续性
+<ol>
+<li>组合参数曲线在连接处具有直到$n$阶连续导矢，即$n$阶连续可微，这类光滑度称之为$C^n$或$n$阶参数连续性</li>
+</ol>
+</li>
+<li>几何连续性
+<ol>
+<li>组合曲线在连接处满足不同于$C^n$的某一组约束条件，称为具有$n$阶几何连续性，记为$G^n$</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>若要求两曲线在结合处达到$C^n$或$G^n$连续，即两曲线在结合处位置连续</li>
+<li>若要求在结合处达到$G^1$连续，就是说两条曲线在结合处满足$G^0$连续的条件下，并有公共的切矢量$Q'(0)=aP'(1)$</li>
+<li>当a=1时，$G^1$连续就成为$C^1$连续</li>
+<li>如图：<img src="参数曲线和曲面基础.png"></li>
+<li>若要求在结合处达到$C^2连续，就是说两条曲线在结合处满足$G^2$连续的条件下，并有相同的曲率</li>
+<li>$C^1$连续保证$G^1$连续，$C^2$连续能保证$G^2$连续，但反过来不行</li>
+<li>即$C^n$连续的条件比$G^n$连续的跳进苛刻</li>
+</ul>
+<h2 id="6%E5%8F%82%E6%95%B0%E6%9B%B2%E9%9D%A2">6、参数曲面</h2>
+<p>$P(u,v)=(x(u,v),y(u,v),z(u,v))\ (u,v)\in [0,1]\times[0,1]$</p>
+<ul>
+<li>参数曲面上的点：
+<ul>
+<li>$P(u,v)$</li>
+</ul>
+</li>
+<li>参数曲面上的切向量
+<ul>
+<li>$u$方向：
+<ul>
+<li>${\dot{P(u,v)}\over \dot{u}}|_{u=u_0\v=v_0}$</li>
+</ul>
+</li>
+<li>$v$方向：
+<ul>
+<li>${\dot{P(u,v)}\over \dot{v}}|_{u=u_0\v=v_0}$</li>
+</ul>
+</li>
+<li>参数曲面上一点的法向量：
+<ul>
+<li>${\dot{P(u,v)}\over \dot{u}}|<em>{u=u_0\v=v_0} \times {\dot{P(u,v)}\over \dot{v}}|</em>{u=u_0\v=v_0}$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="bezier%E6%9B%B2%E7%BA%BF%E4%B8%8Eb%E6%A0%B7%E6%9D%A1%E6%9B%B2%E7%BA%BF">Bezier曲线与B样条曲线</h1>
+<p>Bernstein基函数：<br>
+<img src="Bernstein基函数.png"><br>
+Bernstein曲线的矩阵表示:
+<img src="Bernstein矩阵表示.png">
+Bezier曲线的递推算法:
+<img src="Bezier递推算法.png">
+<img src="Bezier递推算法1.png"></p>
+<p>Bezier曲线的拼接：
+<img src="Bezier曲线的拼接.png"></p>
+<h1 id="%E7%9C%9F%E5%AE%9E%E6%84%9F%E5%9B%BE%E5%BD%A2%E5%AD%A6">真实感图形学</h1>
+<h2 id="1%E6%B6%88%E9%9A%90">1、消隐</h2>
+<p>消隐：在视点确定后将对象表面不可见的点、线、面消去。执行该功能的算法称为消隐算法。</p>
+<ul>
+<li>
+<p>图像空间消隐算法</p>
+<ul>
+<li>图像空间算法是以空间内的每个像素为处理单元，确定在每一个像素处，场景中的物体哪一个距离观察点最近，从而用它的颜色来显示像素</li>
+<li>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">for</span>(窗口内每一个像素)
+    {
+        确定距离视点最近的物体，以该物体表面的颜色来显示像素
+    }
+</div></code></pre>
+</li>
+<li>假设场景中有k个物体，平均每个物体表面由h个多边形构成，显示区域中有$m \times n$个像素，则：<a>算法的复杂度为：$O(mnkh)$</a></li>
+<li><strong>画家算法</strong>：按照画画的顺序，先将距离最远的图形绘制出来，再绘制中层图形，最后绘制最近一层的图形但它无法处理图形互相重叠的情况</li>
+<li><strong>Z-buffer算法</strong>：该算法提供帧缓冲器和深度缓冲器，先将Z缓冲器中的值设置为最小值，当要改变某个像素的颜色值时，先检查当前多边形的深度值是否大于该像素原来的深度，如果大于原来的z值，则说明当前多边形更靠近观察点，用它的颜色替换原来像素的颜色。
+<ul>
+<li>
+<pre class="hljs"><code><div>  Z-Buffer算法（）
+  {
+      帧缓存全置为背景色;
+      深度缓存全置为最小z值;
+      <span class="hljs-keyword">for</span>(每一个多边形)
+      {
+          扫描转换该多边形;
+          <span class="hljs-keyword">for</span>(该多边形所覆盖的每个象素(x,y) )
+          {
+              计算该多边形在该象素的深度值Z(x,y);
+              <span class="hljs-keyword">if</span>(z(x,y)大于z缓存在(x,y)的值)
+              {
+                  把z(x,y)存入z缓存中(x,y)处;
+                  把多边形在(x,y)处的颜色值存入帧缓存的(x,y)处;
+              }
+          }
+      }
+  }
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>物体空间消隐算法</p>
+<ul>
+<li>假设场景中有k个物体，平均每个物体表面由h个多边形构成，显示区域中有$m \times n$个像素，则算法复杂度为：$O((kh)\times (kh))$</li>
+<li>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span>(场景中的每一个物体)
+{
+    将其与场景中的其他物体比较，确定其表面的可见部分;
+    显示该物体表面的可见部分;
+}
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>凸多边形体是由若干个平面围成的物体。假设这些平面方程为<br>
+$a_ix+b_iy+c_iz+d_i=0\i=1,2,3,...,n$
+变换方程的系数，使$(a_i,b_i,c_i)$指向物体外部。那么假设上式定义的凸多面体在以视点为顶点的视图四棱锥内，视点与第$i$个面上一点连线的方向为$(l_i,m_i,n_i)$。那么自隐藏面的判断方法是：$(a_i,b_i,c_i)\cdot (l_i,m_i,n_i)&lt;0$ 。任意两个自隐藏面的交线，为子隐藏线。</p>
+</li>
+<li>
+<p>平面的表示：$H(P)=Ax+By+Cz+D=0$ ,其中 $(A,B,C)$ 即为该平面法线</p>
+</li>
+<li>
+<p>球面的表示：设球心为坐标原点：$H(P)=|P|^2-r^2=0$</p>
+</li>
+<li>
+<p>边界盒检测：使用矩形将多边形包裹起来，通过检测矩形是否与其它物体相交判断边界。这样可以避免在投影之间进行不必要的比较运算，但精度不高，会有边缘盒重叠但图形未重叠的情况出现。</p>
+</li>
+</ul>
+<h2 id="2%E9%A2%9C%E8%89%B2">2、颜色</h2>
+<p>颜色是外来的光刺激作用于人的视觉器官而产生的主观感受，影响因素主要有：</p>
+<ul>
+<li>物体本身</li>
+<li>光源</li>
+<li>周围环境</li>
+<li>观察者的视觉系统</li>
+</ul>
+<p>颜色的心理学度量和物理特性：</p>
+<ul>
+<li>色调(Hue) —— 主波长</li>
+<li>饱和度(Saturation) —— 纯度</li>
+<li>亮度(Lightness) —— 明度</li>
+</ul>
+<p>RGB颜色模型：红绿蓝三元组</p>
+<p>RGB转换为HSV：</p>
+<pre class="hljs"><code><div>max=max(R,G,B);
+min=min(R,G,B);
+<span class="hljs-keyword">if</span> (R = max) H = (G-B)/(max-min);
+<span class="hljs-keyword">if</span> (G = max) H = <span class="hljs-number">2</span> + (B-R)/(max-min);
+<span class="hljs-keyword">if</span> (B = max) H = <span class="hljs-number">4</span> + (R-G)/(max-min);
+H = H * <span class="hljs-number">60</span>;
+<span class="hljs-keyword">if</span> (H &lt; <span class="hljs-number">0</span>) H = H + <span class="hljs-number">360</span>;
+V=max(R,G,B);
+S=(max-min)/max;
+</div></code></pre>
+<p>HSV转化为RGB:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (s == <span class="hljs-number">0</span>)
+    R=G=B=V
+<span class="hljs-keyword">else</span> 
+{
+    H /= <span class="hljs-number">60</span>;
+    i = INTEGER(H)
+    f = H - i
+    a = V * ( <span class="hljs-number">1</span> - s )
+    b = V * ( <span class="hljs-number">1</span> - s * f )
+    c = V * ( <span class="hljs-number">1</span> - s * (<span class="hljs-number">1</span> - f ) )
+    <span class="hljs-keyword">switch</span> (i)
+    <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:
+        R = V; G = c; B = a;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>: 
+        R = b; G = v; B = a;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>: 
+        R = a; G = v; B = c;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>: 
+        R = a; G = b; B = v;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>: 
+        R = c; G = a; B = v;
+    <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>: 
+        R = v; G = a; B = b;
+}
+</div></code></pre>
+<h2 id="3%E7%AE%80%E5%8D%95%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B">3、简单光照模型</h2>
+<ul>
+<li>Phong光照模型
+<ul>
+<li>物体间作用表示为环境光
+<ul>
+<li>假定物体不透明</li>
+<li>则在空间中近似均匀分布，即在任何位置、任何方向上的强度一样的光为环境光，称为：$I_a$</li>
+<li>环境光反射系数$K_a$：在分布均匀的环境光照射下，不同物体表明啊所呈现的亮度不一定相同，因为它们的环境光反射系数不同</li>
+<li>光照方程：$I_e = K_a \times I_a$</li>
+<li>$I_e$为物体表面所呈现的亮度</li>
+<li>环境光模型虽然不同的物体具有不同的亮度，但是同一个物体的表面的亮度是一个恒定值，没有明暗的自然过渡。</li>
+<li>点光源：
+<ul>
+<li>几何形状为一个点，位于空间中的某个位置，向周围所有方向辐射强度相等的光，记为$I_p$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>漫反射
+<ul>
+<li>漫反射一般指粗糙、无光泽物体表面对光的反射。</li>
+<li>光照方程：$I_d=I_pK_dcos\theta$  其中 $\theta \in [0,{\pi\over 2}]$</li>
+<li>$I_d$为漫反射的亮度、$I_p$为点光源的亮度、$K_d$为漫反射系数、$\theta$为入射角</li>
+<li>
+<img src="漫反射.png">
+</li>
+<li>环境光与漫反射相叠加：$I=I_e+I_d$</li>
+</ul>
+</li>
+<li>镜面反射
+<ul>
+<li>镜面反射一般指光滑物体表面对光的反射</li>
+<li>观察者只能在反射方向上才能看到反射光，偏离了该方向则看不到任何光。</li>
+<li>光照方程：$I_s=I_pK_scos^n\alpha$</li>
+<li>$I_s$为镜面反射的光强、$I_p$为点观光源强度、$K_s$为与物体有关的镜面反射系数、$n$为镜面反射指数，$n$的取值与物体表面的粗糙程度有关，一般为1~2000
+<ul>
+<li>$n$越大，表面越平滑，散射现象越少</li>
+<li>$n$越小，表面越毛糙，散射现象越严重</li>
+</ul>
+</li>
+<li>空间分布具有一定方向性</li>
+<li>光强不仅取决于入射光和表面材料，还与观察方向有关</li>
+<li>
+<img src="镜面反射.png">
+</li>
+</ul>
+</li>
+<li>简单光照模型方程即为：$I=I_e+I_d+I_s=I_aK_a+I_p(K_d(L\cdot N)+K_s(V\cdot R)^n)$</li>
+<li>Phong模型的缺陷：
+<ul>
+<li>显示出的物体塑料感强，无质感变化</li>
+<li>环境光是常量，没有考虑物体间相互反射光</li>
+<li>镜面反射颜色是光源颜色，与材质无关</li>
+<li>镜面反射在大入射角时会产生失真</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>纹理
+<ul>
+<li>纹理是物体表面的细小结构</li>
+<li>纹理类型：颜色纹理、几何纹理</li>
+</ul>
+</li>
+<li>阴影
+<ul>
+<li>光源照射不到的物体后面形成的三维多面体阴影区域称为阴影域</li>
+<li>透视变换生成图像的过程中，屏幕视域空间是一个四棱锥，对物体的阴影域进行裁剪，就会变成封闭多面体，称其为阴影域多面体</li>
+<li>场景中的物体，只要与这些阴影域进行三维布尔交运算，计算出的交集就是物体表面的阴影区域</li>
+</ul>
+</li>
+</ul>
+<h1 id="%E6%95%B4%E4%BD%93%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B">整体光照模型</h1>
+<ul>
+<li>局部光照模型
+<ul>
+<li>在真实感图形学中，仅处理光源直接照射物体表面的光照模型称为局部光照模型，与此对应的可以处理物体之间的光照作用的模型称为整体光照模型。</li>
+<li>简单光照模型可以计算经过点光源照明的物体表面的光强，实际上就是一种局部光照模型。但是这种模型认为镜面反射项与物体表面材质无关，故这只是一种经验模型。</li>
+<li>局部光照模型是基于入射光能量导出的光辐射模型，而简单光反射模型基于经验，前者更具有理论基础。</li>
+<li>局部光照模型的反射项以实际物体表面的微平面为基础，反应表面的粗糙度对反射光强的影响，比简单光照模型更精确。</li>
+<li>局部光照模型根据材料的物理材质决定颜色，而简单光照模型的高光颜色与材料无关。</li>
+<li>用简单光照模型生成的物体图像，看上去像塑料，显示不出磨亮的金属光泽；而局部光照模型中，反射光强的计算考虑了物体材质的影响，可以模拟金属的光泽</li>
+<li>简单光照模型和局部光照模型，虽然可以生成物体的真实感图像，但只是处理光源直接照射物体表面的光强计算，不能很好地模拟光的折射、反射和阴影等，也不能用来表示物体间的相互光照影响</li>
+<li>基于简单光照模型的光透射模型，虽然可以模拟光的折射，但是这种折射的计算范围很小，不能很好地模拟多个透明体之间复杂的光照现象</li>
+</ul>
+</li>
+<li>整体光照模型
+<ul>
+<li>整体光照模型是一种更精确的光照模型，它是相较于局部光照模型而言的</li>
+<li>在现有的整体光照模型中，主要有光线跟踪和辐射度两种方法，它们是当今真实感图形学中最重要的两种图形绘制技术。</li>
+</ul>
+</li>
+<li>光线追踪
+<ul>
+<li>由光源发出的光到达物体表面后，产生反射和折射，简单光照模型和光透视模型模拟了这两种现象。在简单光照模型中，反射光被分为漫反射光和镜面反射光。简单光透射模型把透射光分为漫透射光和规则透射光</li>
+<li>由光源发出的光称为直接光，物体对直接光的反射或折射分别称为直接反射和直接折射</li>
+<li>把物体表面间反射和折射的光称为间接光，并称这种反射为间接反射</li>
+<li>光线在物体之间的传播方式，是光线追踪算法的基础</li>
+<li>最基本的光纤追踪算法是跟踪镜面反射和折射。从光源发出的光遇到物体的表面，发生反射和折射，光就改变方向，沿着反射方向和折射方向继续前进，直到遇到新的物体</li>
+<li>光源发出光纤，经过反射与折射，只有很少一部分可以进入人的眼睛，因此实际光线追踪算法的跟踪方向是与光的传播方向相反的，是一种视线跟踪</li>
+<li>
+<img src="光线追踪算法.png">
+</li>
+<li>4种光线的定义：由视点经像素(x,y)发出的射线，即视线；物体表面上点与光源的连线，即阴影测试线、反射光线、折射光线</li>
+<li>光强的计算方法：当光线与物体表面相交于点P时，光在点P对光线方向的贡献分为三部分，三部分光强相加，就是该条光线在点P处的总光强。
+<ol>
+<li>由光源产生的直接光照射光强，是交点处的局部光强</li>
+<li>反射方向上由其他物体引起的间接光照光强</li>
+<li>折射方向上由其他物体引起的间接光照光强</li>
+</ol>
+</li>
+<li>光线跟踪算法实际上是自然界光照明物理过程的近似逆过程，这一过程可以跟踪物体间的镜面反射光线和规则透射，模拟了理想表面的光的传播</li>
+<li>光线跟踪的终止条件：
+<ul>
+<li>该光线未碰到任何物体</li>
+<li>该光线碰到了背景</li>
+<li>该光线在经过多次反射和折射后产生衰减，其对于视点的光强贡献值很小(小于预设值)</li>
+<li>光线反射或折射次数即跟踪次数大于给定值(预设值)</li>
+</ul>
+</li>
+<li>光线跟踪伪代码：
+<ul>
+<li>
+<pre class="hljs"><code><div>  RayTracing(start,direction,weight,color) 
+  {
+      <span class="hljs-keyword">if</span>(weight&lt;MinWeight)
+      {
+          color=black
+      }
+      <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">if</span>(与场景中所有物体没有交点)
+          {
+              color=black
+          }
+          <span class="hljs-keyword">else</span> {
+              I_local = 在交点处用局部光照模型计算出的光强;
+              计算反射方向R;
+              RayTraycing(最近的交点,R,weight*w_r,I_r);
+              计算折射方向T;
+              RayTraycing(最近的交点,T,weight*<span class="hljs-keyword">w_t</span>,I_t);
+          }
+      }
+  }
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });
+</script>
+</body>
+</html>
