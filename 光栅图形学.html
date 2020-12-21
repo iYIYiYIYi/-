@@ -842,7 +842,7 @@ C3：若端点的y &gt; wyt，则C3=1，否则C3=0。</p>
 <li>将屏幕像素划分为n个子像素</li>
 <li>求出所有中心位于直线段内的子像素</li>
 <li>计算这些子像素对原像素亮度贡献之和乘以像素的最大灰度值（与卷积运算类似），即通过加权表得出子像素的权重和，通过总权重求出亮度。</li>
-<li>加权表可取 $\frac{1}{16} \left[\begin{matrix} 1 &amp; 2 &amp; 3 \4 &amp; 5 &amp; 6 \7 &amp; 8 &amp; 9\end{matrix}\right]$</li>
+<li>加权表可取 $\frac{1}{16} \left[\begin{matrix} 1 &amp; 2 &amp; 1 \ 2 &amp; 4 &amp; 2 \ 1 &amp; 2 &amp; 1\end{matrix}\right]$</li>
 </ul>
 </li>
 </ul>
